@@ -1,7 +1,7 @@
 {
   "development": {
-    "username": "roy",
-    "password": "bandagriss",
+    "username": "user",
+    "password": "password",
     "database": "proyecto_grado",
     "host": "127.0.0.1",
     "dialect": "postgres"
