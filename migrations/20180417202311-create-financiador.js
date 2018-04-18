@@ -16,6 +16,14 @@ module.exports = {
           key: 'id'
         }
       },
+      fid_usuario: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'usuarios',
+          key: 'id'
+        }
+      },
       nombre: {
         type: Sequelize.STRING
       },
@@ -48,6 +56,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     });

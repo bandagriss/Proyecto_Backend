@@ -41,11 +41,9 @@ module.exports = {
         type: Sequelize.STRING
       },
       fecha_inicio_real: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       fecha_fin_real: {
-        allowNull: false,
         type: Sequelize.DATE
       },
       createdAt: {
@@ -54,7 +52,10 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
+        type: Sequelize.DATE
       }
     });
   },

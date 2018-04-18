@@ -50,7 +50,6 @@ module.exports = {
         type: Sequelize.STRING
       },
       resultado: {
-        allowNull: false,
         type: Sequelize.STRING
       },
       objetivo: {
@@ -63,6 +62,9 @@ module.exports = {
       },
       updatedAt: {
         allowNull: false,
+        type: Sequelize.DATE
+      },
+      deletedAt: {
         type: Sequelize.DATE
       }
     });
