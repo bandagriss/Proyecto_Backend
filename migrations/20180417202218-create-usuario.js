@@ -1,3 +1,4 @@
+const uuidv1 = require('uuid/v1');
 
 module.exports = {
   up: (queryInterface, Sequelize) => queryInterface.createTable('usuarios', {
@@ -57,13 +58,26 @@ module.exports = {
     imagen: {
       type: Sequelize.STRING
     },
-    usuario: {
+    username: {
+      allowNull: false,
+      type: Sequelize.STRING,
+      unique: {
+        args: true,
+        msg: 'El Usuario ya existe'
+      }
+    },
+    password: {
       allowNull: false,
       type: Sequelize.STRING
     },
-    contrasena: {
+    refresh_token: {
+      type: Sequelize.UUID,
       allowNull: false,
-      type: Sequelize.STRING
+      unique: {
+        args: true,
+        msg: 'Realmente no tienes probabilidades'
+      },
+      defaultValue: uuidv1()
     },
     createdAt: {
       allowNull: false,

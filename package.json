@@ -5,21 +5,26 @@
   "scripts": {
     "start": "node ./bin/www",
     "startdev": "nodemon ./bin/www",
-    "lint": "node_modules/.bin/eslint routes/ models/ migrations/",
-    "lint-fix": "node_modules/.bin/eslint --fix routes/ models/ migrations/",
-    "migrate": "node_modules/.bin/sequelize db:migrate"
+    "lint": "node_modules/.bin/eslint routes/ models/ migrations/ controllers/",
+    "lint-fix": "node_modules/.bin/eslint --fix routes/ models/ migrations/ controllers/",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "seeder": "node_modules/.bin/sequelize db:seed:all"
   },
   "dependencies": {
+    "bcrypt": "^2.0.1",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "express": "~4.14.0",
+    "express-jwt": "^5.3.1",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.2.1",
     "morgan": "~1.7.0",
     "nodemon": "^1.17.3",
     "pg": "^7.4.1",
     "sequelize": "^4.37.6",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+    "uuid": "^3.2.1"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -52,5 +57,8 @@
       ]
     }
   },
-  "eslintIgnore": ["index.js"]
+  "eslintIgnore": [
+    "index.js",
+    "AuthController.js"
+  ]
 }

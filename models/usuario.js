@@ -1,9 +1,14 @@
+const bcrypt = require('bcrypt');
+const uuidv1 = require('uuid/v1');
 
 module.exports = (sequelize, DataTypes) => {
   var Usuario = sequelize.define('Usuario', {
     nombres: {
       type: DataTypes.STRING,
-      trim: true
+      allowNull: false,
+      validate: {
+        notEmpty: { args: [true], msg: 'El campo nombres no puede estar vacio' }
+      }
     },
     fid_rol: DataTypes.INTEGER,
     fid_institucion: DataTypes.INTEGER,
@@ -14,13 +19,38 @@ module.exports = (sequelize, DataTypes) => {
       values: ['masculino', 'femenino']
     },
     fecha_nacimiento: DataTypes.DATE,
-    nro_carnet: DataTypes.INTEGER,
+    nro_carnet: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        notEmpty: { args: [true], msg: 'El número de carnet es requerido' }
+      }
+    },
     direccion: DataTypes.STRING,
     telefono: DataTypes.INTEGER,
     correo: DataTypes.STRING,
     imagen: DataTypes.STRING,
-    usuario: DataTypes.STRING,
-    contrasena: DataTypes.STRING
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'El Usuario ya existe'
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    refresh_token: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: {
+        args: true,
+        msg: 'Las probabilidades estan realmente en tu contra'
+      },
+      defaultValue: uuidv1()
+    }
   }, {
     classMethods: {
       associate(models) {
@@ -40,5 +70,15 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     paranoid: true
   });
+
+  Usuario.beforeCreate((usuario) => {
+    const respuesta = usuario;
+    const hash = bcrypt.hashSync(usuario.password, 10);
+    respuesta.password = hash;
+    respuesta.refresh_token = uuidv1();
+  });
+
+  Usuario.prototype.comparePassword = (pass1, pass2) => bcrypt.compareSync(pass1, pass2);
+
   return Usuario;
 };
