@@ -1,12 +1,12 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Departamento = sequelize.define('Departamento', {
     nombre: {
-      type:  DataTypes.STRING,
+      type: DataTypes.STRING
     }
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Departamento.hasMany(models.Institucion);
       }
     },

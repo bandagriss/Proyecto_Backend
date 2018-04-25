@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Institucion = sequelize.define('Institucion', {
     nombre: DataTypes.STRING,
@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     fid_departamento: DataTypes.INTEGER
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Institucion.belongsTo(models.Departamento, {
           foreignKey: {
             allowNull: false

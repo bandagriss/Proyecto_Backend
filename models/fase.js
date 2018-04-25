@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Fase = sequelize.define('Fase', {
     nombre: DataTypes.STRING,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     fecha_fin_real: DataTypes.DATE
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Fase.belongsTo(models.Proyecto, {
           allowNull: false
         });

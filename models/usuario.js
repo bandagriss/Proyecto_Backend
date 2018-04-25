@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Usuario = sequelize.define('Usuario', {
     nombres: {
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     contrasena: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Usuario.belongsTo(models.Rol, {
           foreignKey: {
             allowNull: false
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: {
             allowNull: false
           }
-        })
+        });
       }
     },
     tableName: 'usuarios',

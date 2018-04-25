@@ -1,4 +1,4 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Proyecto = sequelize.define('Proyecto', {
     nombre: DataTypes.STRING,
@@ -11,10 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     cantidad: DataTypes.INTEGER,
     poblacion: DataTypes.STRING,
     resultado: DataTypes.STRING,
-    objetivo: DataTypes.STRING,
+    objetivo: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Proyecto.belongsTo(models.Institucion, {
           allowNull: false
         });

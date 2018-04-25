@@ -1,10 +1,10 @@
-'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   var Rol = sequelize.define('Rol', {
     nombre: DataTypes.STRING
   }, {
     classMethods: {
-      associate: function(models) {
+      associate(models) {
         Rol.hasMany(models.Usuario);
       }
     },

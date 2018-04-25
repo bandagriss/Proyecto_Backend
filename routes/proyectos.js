@@ -1,40 +1,42 @@
 var express = require('express');
+
 var router = express.Router();
 var models = require('../models');
 
 
 /**
  * Recupera todos los registros de proyectos
- * @param {} 
+ * @param {}
  * @return {proyectos}
  */
 
 router.get('/proyectos', (req, res) => {
   models.Proyecto.findAll()
-    .then(respuesta => {
-      if( respuesta.length > 0 ){
+    .then((respuesta) => {
+      if (respuesta.length > 0) {
         res.status(200).send({
           mensaje: 'La consulta fue un exito',
           datos: respuesta
-        })
-      } else {
+        });
+      }
+      else {
         res.status(200).send({
           mensaje: 'No se encontraron resultados',
           datos: respuesta
         });
       }
-    }).catch(error => {
+    }).catch((error) => {
       res.status(401).send({
         mensaje: 'Ocurrio un error al procesar la consulta',
         datos: error
-      })
-    })
+      });
+    });
 });
 
 
 /**
  * Crea un proyectos
- * @param {nombre} 
+ * @param {nombre}
  * @return {registro}
  */
 
@@ -50,15 +52,15 @@ router.post('/proyectos', (req, res) => {
     cantidad: req.body.cantidad,
     poblacion: req.body.poblacion,
     resultado: req.body.resultado,
-    objetivo: req.body.objetivo,
+    objetivo: req.body.objetivo
   })
-    .then(respuestaProyecto => {
+    .then((respuestaProyecto) => {
       res.status(201).send({
-        mensaje: "La institución se creó satisfactoriamente",
+        mensaje: 'La institución se creó satisfactoriamente',
         datos: respuestaProyecto
-      })
+      });
     })
-    .catch(error => {
+    .catch((error) => {
       res.status(401).send({
         mensaje: 'Ocurrió un problema al guardar el registro',
         datos: error
@@ -69,7 +71,7 @@ router.post('/proyectos', (req, res) => {
 
 /**
  * Actualiza un registro
- * @param {id} 
+ * @param {id}
  * @return {cantidad}
  */
 
@@ -85,28 +87,28 @@ router.put('/proyectos/:id', (req, res) => {
     cantidad: req.body.cantidad,
     poblacion: req.body.poblacion,
     resultado: req.body.resultado,
-    objetivo: req.body.objetivo,
+    objetivo: req.body.objetivo
   }, {
     where: {
       id: req.params.id
     }
-  }).then(respuesta => {
+  }).then((respuesta) => {
     res.status(200).send({
       mensaje: 'El dato fue actualizado correctamente',
       datos: respuesta
-    })
-  }).catch(error => {
+    });
+  }).catch((error) => {
     res.status(401).send({
       mensaje: 'Ocurrió un error al actualizar',
       datos: error
-    })
-  })
+    });
+  });
 });
 
 
 /**
- * Retorna los datos de un proyectos 
- * @param {id} 
+ * Retorna los datos de un proyectos
+ * @param {id}
  * @return {registro}
  */
 
@@ -115,30 +117,31 @@ router.get('/proyectos/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(respuesta => {
-    if( respuesta != null ){
+  }).then((respuesta) => {
+    if (respuesta != null) {
       res.status(200).send({
         mensaje: 'La consulta fue un exito',
         datos: respuesta
-      })
-    } else {
+      });
+    }
+    else {
       res.status(200).send({
         mensaje: 'No se encontró el registro',
         datos: respuesta
-      })
+      });
     }
-  }).catch(error => {
+  }).catch((error) => {
     res.status(401).send({
       mensaje: 'Ocurrió un error en la consulta',
       datos: error
-    })
+    });
   });
 });
 
 
 /**
  * Elimina un registro
- * @param {id} 
+ * @param {id}
  * @return {cantidad}
  */
 
@@ -147,25 +150,25 @@ router.delete('/proyectos/:id', (req, res) => {
     where: {
       id: req.params.id
     }
-  }).then(respuesta => {
-    if( respuesta > 0 ){
+  }).then((respuesta) => {
+    if (respuesta > 0) {
       res.status(200).send({
         mensaje: 'El registro se eliminó exitosamente',
         datos: respuesta
-      })
-    } else {
+      });
+    }
+    else {
       res.status(200).send({
         mensaje: 'No se encontró ningún registro',
         datos: respuesta
-      })
+      });
     }
-
-  }).catch(error => {
+  }).catch((error) => {
     res.status(401).send({
       mensaje: 'Ocurrió un error al eliminar el registro',
       datos: error
-    })
-  })
+    });
+  });
 });
 
 module.exports = router;
