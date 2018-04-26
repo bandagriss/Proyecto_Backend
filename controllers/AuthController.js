@@ -51,7 +51,12 @@ function refreshJWT(req, res, next) {
 
 function returnJWT(req, res) {
   if (req.dbUsuario && req.token) {
-    res.status(201).json({ token: req.token, refresh_token: req.dbUsuario.refresh_token });
+    const data = {};
+    data.nombres = req.dbUsuario.nombres;
+    data.fid_rol = req.dbUsuario.fid_rol;
+    data.fid_institucion = req.dbUsuario.fid_institucion;
+    
+    res.status(201).json({ token: req.token, refresh_token: req.dbUsuario.refresh_token, data });
   }
   else {
     res.status(401).json({ error: 'Unauthorized' });

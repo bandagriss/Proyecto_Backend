@@ -1,4 +1,6 @@
 'use strict';
+const bcrypt = require('bcrypt');
+const uuidv1 = require('uuid/v1');
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -17,7 +19,8 @@ module.exports = {
       fid_institucion: 1,
       nombres: 'Admin Administrador',
       username: 'admin',
-      password: '123456',
+      password: bcrypt.hashSync('123456', 10),
+      refresh_token: uuidv1(),
       nro_carnet: '123456',
       createdAt: new Date(),
       updatedAt: new Date()
