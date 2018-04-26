@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     fecha_inicio: DataTypes.DATE,
     fecha_fin: DataTypes.DATE,
     cantidad: DataTypes.INTEGER,
-    poblacion: DataTypes.STRING,
+    poblacion_hombres: DataTypes.STRING,
+    poblacion_mujeres: DataTypes.STRING,
     resultado: DataTypes.STRING,
     objetivo: DataTypes.STRING
   }, {
@@ -22,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
           allowNull: false
         });
         Proyecto.hasMany(models.Fase);
+        Proyecto.hasMany(models.ProyectoPersona);
       }
     },
     tableName: 'proyectos',

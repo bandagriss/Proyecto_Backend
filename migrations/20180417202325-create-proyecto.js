@@ -44,7 +44,11 @@ module.exports = {
       allowNull: false,
       type: Sequelize.INTEGER
     },
-    poblacion: {
+    poblacion_hombres: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    poblacion_mujeres: {
       allowNull: false,
       type: Sequelize.STRING
     },

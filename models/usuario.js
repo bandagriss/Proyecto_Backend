@@ -64,6 +64,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
           }
         });
+        Usuario.hasMany(models.ProyectoPersona);
+        Usuario.hasMany(models.FinanciadorPersona);
       }
     },
     tableName: 'usuarios',

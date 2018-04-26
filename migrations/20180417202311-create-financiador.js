@@ -7,22 +7,6 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER
     },
-    fid_institucion: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'instituciones',
-        key: 'id'
-      }
-    },
-    fid_usuario: {
-      allowNull: false,
-      type: Sequelize.INTEGER,
-      references: {
-        model: 'usuarios',
-        key: 'id'
-      }
-    },
     nombre: {
       type: Sequelize.STRING
     },
@@ -47,6 +31,9 @@ module.exports = {
       type: Sequelize.STRING
     },
     mision: {
+      type: Sequelize.STRING
+    },
+    pais_origen: {
       type: Sequelize.STRING
     },
     createdAt: {
