@@ -1,7 +1,7 @@
 const models = require('../models');
 
 function listar(req, res) {
-  models.Financiador.findAll()
+  models.ProyectoPersona.findAll()
     .then((respuesta) => {
       if (respuesta.length > 0) {
         res.status(200).send({
@@ -11,8 +11,8 @@ function listar(req, res) {
       }
       else {
         res.status(200).send({
-          mensaje: 'No se encontraron resultados',
-          datos: respuesta
+          mensaje: 'La consulta fue un exito',
+          datos: 'No se encontraron resultados en la búsqueda'
         });
       }
     }).catch((error) => {
@@ -24,21 +24,15 @@ function listar(req, res) {
 }
 
 function crear(req, res) {
-  models.Financiador.create({
-    nombre: req.body.nombre,
-    procedencia: req.body.procedencia,
-    descripcion: req.body.descripcion,
-    logo: req.body.logo,
-    fecha_fundacion: req.body.fecha_fundacion,
-    codigo_registro: req.body.codigo_registro,
-    vision: req.body.vision,
-    mision: req.body.mision,
-    pais_origen: req.body.pais_origen
+  models.ProyectoPersona.create({
+    fid_proyecto: req.body.fid_proyecto,
+    fid_persona: req.body.fid_persona,
+    detalle: req.body.detalle
   })
-    .then((respuestaFinanciador) => {
+    .then((respuestaProyectoPersona) => {
       res.status(201).send({
-        mensaje: 'La institución se creó satisfactoriamente',
-        datos: respuestaFinanciador
+        mensaje: 'El proyecto asignado a una persona se creó satisfactoriamente',
+        datos: respuestaProyectoPersona
       });
     })
     .catch((error) => {
@@ -50,17 +44,10 @@ function crear(req, res) {
 }
 
 function actualizar(req, res) {
-  models.Financiador.update({
-    nombre: req.body.nombre,
-    fid_institucion: req.body.fid_institucion,
-    fid_usuario: req.body.fid_usuario,
-    procedencia: req.body.procedencia,
-    descripcion: req.body.descripcion,
-    logo: req.body.logo,
-    fecha_fundacion: req.body.fecha_fundacion,
-    codigo_registro: req.body.codigo_registro,
-    vision: req.body.vision,
-    mision: req.body.mision
+  models.ProyectoPersona.update({
+    fid_proyecto: req.body.fid_proyecto,
+    fid_persona: req.body.fid_persona,
+    detalle: req.body.detalle
   }, {
     where: {
       id: req.params.id
@@ -79,7 +66,7 @@ function actualizar(req, res) {
 }
 
 function buscar(req, res) {
-  models.Financiador.findOne({
+  models.ProyectoPersona.findOne({
     where: {
       id: req.params.id
     }
@@ -105,7 +92,7 @@ function buscar(req, res) {
 }
 
 function eliminar(req, res) {
-  models.Financiador.destroy({
+  models.ProyectoPersona.destroy({
     where: {
       id: req.params.id
     }
@@ -137,4 +124,3 @@ module.exports = {
   buscar,
   eliminar
 };
-
