@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 // var index = require('./routes/index');
 var departamentos = require('./routes/departamentos');
@@ -16,6 +17,17 @@ var fases = require('./routes/fases');
 var autenticacion = require('./routes/auth');
 
 var app = express();
+
+// adiciionando headers
+app.use(cors({
+  'Access-Control-Allow-Origin': '*',
+  origin: '*',
+  methods: 'GET, HEAD, PUT, PATCH, DELETE, OPTIONS',
+  preflightContinue: true,
+  headers: 'Cache-Control, Pragma, Content-Type, Authorization, Content-Length, X-Requested-With',
+  'Access-Control-Allow-Headers': 'Authorization, Content-Type',
+  'X-Frame-Options': 'SAMEORIGIN',
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
