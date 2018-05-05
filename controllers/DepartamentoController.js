@@ -17,7 +17,7 @@ function listar(req, res) {
         });
       }
     }).catch((error) => {
-      res.status(401).send({
+      res.status(400).send({
         mensaje: 'Ocurrio un error al procesar la consulta',
         datos: error
       });
@@ -49,7 +49,7 @@ function crear(req, res) {
     }
   })
     .catch((error) => {
-      res.status(401).send({
+      res.status(400).send({
         mensaje: 'Ocurrió un problema al guardar el registro',
         datos: error
       });
@@ -64,12 +64,24 @@ function actualizar(req, res) {
       id: req.params.id
     }
   }).then((respuesta) => {
-    res.status(200).send({
-      mensaje: 'El dato fue actualizado correctamente',
-      datos: respuesta
-    });
+    if (respuesta != null) {
+      models.Departamento.findOne({
+        where: { id: req.params.id }
+      }).then((item) => {
+        res.status(200).send({
+          mensaje: 'El dato fue actualizado correctamente',
+          datos: item
+        });
+      });
+    }
+    else {
+      res.status(400).send({
+        mensaje: 'No se actualizó ningun dato',
+        datos: respuesta
+      });
+    }
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       mensaje: 'Ocurrió un error al actualizar el departamento',
       datos: error
     });
@@ -95,7 +107,7 @@ function buscar(req, res) {
       });
     }
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       mensaje: 'Ocurrió un error en la consulta',
       datos: error
     });
@@ -121,7 +133,7 @@ function eliminar(req, res) {
       });
     }
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       mensaje: 'Ocurrió un error al eliminar el registro',
       datos: error
     });
