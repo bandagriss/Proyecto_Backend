@@ -1,25 +1,27 @@
 
 module.exports = (sequelize, DataTypes) => {
-  var Institucion = sequelize.define('Institucion', {
+  const Institucion = sequelize.define('Institucion', {
+    fid_departamento: DataTypes.INTEGER,
     nombre: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
-    fid_departamento: DataTypes.INTEGER
+    descripcion: DataTypes.STRING
   }, {
-    classMethods: {
-      associate(models) {
-        Institucion.belongsTo(models.Departamento, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-        Institucion.hasMany(models.Proyecto);
-        Institucion.hasMany(models.Financiador);
-        Institucion.hasMany(models.Usuario);
-      }
-    },
     tableName: 'instituciones',
     timestamps: true,
     paranoid: true
   });
+  Institucion.associate = (models) => {
+    Institucion.belongsTo(models.Departamento, {
+      foreignKey: 'fid_departamento'
+    });
+    Institucion.hasMany(models.Proyecto, {
+      foreignKey: 'fid_institucion'
+    });
+    Institucion.hasMany(models.Financiador, {
+      foreignKey: 'fid_institucion'
+    });
+    Institucion.hasMany(models.Usuario, {
+      foreignKey: 'fid_institucion'
+    });
+  };
   return Institucion;
 };

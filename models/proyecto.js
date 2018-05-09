@@ -14,21 +14,23 @@ module.exports = (sequelize, DataTypes) => {
     resultado: DataTypes.STRING,
     objetivo: DataTypes.STRING
   }, {
-    classMethods: {
-      associate(models) {
-        Proyecto.belongsTo(models.Institucion, {
-          allowNull: false
-        });
-        Proyecto.belongsTo(models.Financiador, {
-          allowNull: false
-        });
-        Proyecto.hasMany(models.Fase);
-        Proyecto.hasMany(models.ProyectoPersona);
-      }
-    },
     tableName: 'proyectos',
     timestamps: true,
     paranoid: true
   });
+  Proyecto.associate = (models) => {
+    Proyecto.belongsTo(models.Institucion, {
+      foreignKey: 'fid_institucion'
+    });
+    Proyecto.belongsTo(models.Financiador, {
+      foreignKey: 'fid_financiador'
+    });
+    Proyecto.hasMany(models.Fase, {
+      foreignKey: 'fid_proyecto'
+    });
+    Proyecto.hasMany(models.ProyectoPersona, {
+      foreignKey: 'fid_proyecto'
+    });
+  };
   return Proyecto;
 };

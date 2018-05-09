@@ -8,8 +8,9 @@ module.exports = {
       type: Sequelize.INTEGER
     },
     fid_departamento: {
-      allowNull: false,
+      onDelete: 'CASCADE',
       type: Sequelize.INTEGER,
+      allowNull: false,
       references: {
         model: 'departamentos',
         key: 'id'

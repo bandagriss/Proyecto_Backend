@@ -11,15 +11,17 @@ module.exports = (sequelize, DataTypes) => {
     mision: DataTypes.STRING,
     pais_origen: DataTypes.STRING
   }, {
-    classMethods: {
-      associate(models) {
-        Financiador.hasMany(models.Proyecto);
-        Financiador.hasMany(models.FinanciadorPersona);
-      }
-    },
     tableName: 'financiadores',
     timestamps: true,
     paranoid: true
   });
+  Financiador.associate = (models) => {
+    Financiador.hasMany(models.Proyecto, {
+      foreignKey: 'fid_financiador'
+    });
+    Financiador.hasMany(models.FinanciadorPersona, {
+      foreignKey: 'fid_financiador'
+    });
+  };
   return Financiador;
 };

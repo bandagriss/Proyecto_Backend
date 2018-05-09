@@ -14,16 +14,14 @@ module.exports = (sequelize, DataTypes) => {
     fecha_inicio_real: DataTypes.DATE,
     fecha_fin_real: DataTypes.DATE
   }, {
-    classMethods: {
-      associate(models) {
-        Fase.belongsTo(models.Proyecto, {
-          allowNull: false
-        });
-      }
-    },
     tableName: 'fases',
     timestamps: true,
     paranoid: true
   });
+  Fase.associate = (models) => {
+    Fase.belongsTo(models.Proyecto, {
+      foreignKey: 'fid_proyecto'
+    });
+  };
   return Fase;
 };

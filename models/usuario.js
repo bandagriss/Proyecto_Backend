@@ -72,6 +72,20 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     paranoid: true
   });
+  Usuario.associate = (models) => {
+    Usuario.belongsTo(models.Rol, {
+      foreignKey: 'fid_rol'
+    });
+    Usuario.belongsTo(models.Institucion, {
+      foreignKey: 'fid_institucion'
+    });
+    Usuario.hasMany(models.ProyectoPersona, {
+      foreignKey: 'fid_persona'
+    });
+    Usuario.hasMany(models.FinanciadorPersona, {
+      foreignKey: 'fid_persona'
+    });
+  };
 
   Usuario.beforeCreate((usuario) => {
     const respuesta = usuario;

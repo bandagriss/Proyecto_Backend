@@ -13,7 +13,7 @@ function listar(req, res) {
       data: users
     });
   }).catch((e) => {
-    res.status(500).json({ error: e.message });
+    res.status(400).json({ error: e.message });
   });
 }
 
@@ -42,12 +42,12 @@ function crear(req, res) {
       data: newUser
     });
   }).catch((e) => {
-    res.status(401).json({
+    res.status(400).json({
       finalizado: false,
       mensaje: 'Ocurrio un error al crear el usuario',
       error: e.errors[0].message
     });
-    // res.status(401).json({ error: e });
+    // res.status(400).json({ error: e });
   });
 }
 
@@ -72,7 +72,7 @@ function buscar(req, res) {
       });
     }
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       finalizado: false,
       mensaje: 'Ocurrió un error en la consulta',
       datos: error
@@ -107,7 +107,7 @@ function actualizar(req, res) {
       datos: respuesta
     });
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       finalizado: false,
       mensaje: 'Ocurrió un error al actualizar',
       datos: error
@@ -136,7 +136,7 @@ function eliminar(req, res) {
       });
     }
   }).catch((error) => {
-    res.status(401).send({
+    res.status(400).send({
       finalizado: false,
       mensaje: 'Ocurrió un error al eliminar el registro',
       datos: error

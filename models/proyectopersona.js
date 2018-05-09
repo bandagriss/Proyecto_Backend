@@ -11,24 +11,18 @@ module.exports = (sequelize, DataTypes) => {
     },
     detalle: DataTypes.STRING
   }, {
-    classMethods: {
-      associate(models) {
-        ProyectoPersona.belongsTo(models.Proyecto, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-        ProyectoPersona.belongsTo(models.Usuario, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-      }
-    },
     tableName: 'proyecto_persona',
     timestamps: true,
     paranoid: true
 
   });
+  ProyectoPersona.associate = (models) => {
+    ProyectoPersona.belongsTo(models.Proyecto, {
+      foreignKey: 'fid_proyecto'
+    });
+    ProyectoPersona.belongsTo(models.Usuario, {
+      foreignKey: 'fid_persona'
+    });
+  };
   return ProyectoPersona;
 };
