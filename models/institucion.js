@@ -11,7 +11,11 @@ module.exports = (sequelize, DataTypes) => {
   });
   Institucion.associate = (models) => {
     Institucion.belongsTo(models.Departamento, {
-      foreignKey: 'fid_departamento'
+      onDelete: 'CASCADE',
+      foreignKey: {
+        name: 'fid_departamento',
+        allowNull: false
+      }
     });
     Institucion.hasMany(models.Proyecto, {
       foreignKey: 'fid_institucion'

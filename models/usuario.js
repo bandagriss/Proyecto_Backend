@@ -73,11 +73,11 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true
   });
   Usuario.associate = (models) => {
-    Usuario.belongsTo(models.Rol, {
-      foreignKey: 'fid_rol'
-    });
     Usuario.belongsTo(models.Institucion, {
       foreignKey: 'fid_institucion'
+    });
+    Usuario.belongsTo(models.Rol, {
+      foreignKey: 'fid_rol'
     });
     Usuario.hasMany(models.ProyectoPersona, {
       foreignKey: 'fid_persona'
