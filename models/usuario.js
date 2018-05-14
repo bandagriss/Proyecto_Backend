@@ -52,22 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: uuidv1()
     }
   }, {
-    classMethods: {
-      associate(models) {
-        Usuario.belongsTo(models.Rol, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-        Usuario.belongsTo(models.Institucion, {
-          foreignKey: {
-            allowNull: false
-          }
-        });
-        Usuario.hasMany(models.ProyectoPersona);
-        Usuario.hasMany(models.FinanciadorPersona);
-      }
-    },
     tableName: 'usuarios',
     timestamps: true,
     paranoid: true
@@ -87,7 +71,7 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  Usuario.beforeCreate((usuario) => {
+  Usuario.hook('beforeCreate', (usuario) => {
     const respuesta = usuario;
     const hash = bcrypt.hashSync(usuario.password, 10);
     respuesta.password = hash;

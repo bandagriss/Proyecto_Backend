@@ -1,5 +1,44 @@
 const models = require('../models');
 
+function buscar(req, res, mensaje) {
+  models.Usuario.findOne({
+    where: {
+      id: req.params.id
+    },
+    attributes: { exclude: ['password', 'refresh_token'] },    
+    include: [
+      {
+        model: models.Rol
+      },
+      {
+        model: models.Institucion
+      }
+    ]
+  }).then((respuesta) => {
+    if (respuesta != null) {
+      res.status(200).send({
+        finalizado: true,
+        mensaje,
+        datos: respuesta
+      });
+    }
+    else {
+      res.status(200).send({
+        finalizado: true,
+        mensaje: 'No se encontró el registro',
+        datos: respuesta
+      });
+    }
+  }).catch((error) => {
+    res.status(400).send({
+      finalizado: false,
+      mensaje: 'Ocurrió un error en la consulta',
+      datos: error
+    });
+  });
+}
+
+
 function listar(req, res) {
   const { offset = 0, limit = 50 } = req.query;
   models.Usuario.findAll({
@@ -41,11 +80,8 @@ function listar(req, res) {
     }, {
       attributes: { exclude: ['refresh_token'] }
     }).then((newUser) => {
-      res.status(201).json({
-        finalizado: true,
-        mensaje: 'Se creó el usuario correctamente',
-        datos: newUser
-      });
+      req.params.id = newUser.id;
+      buscar(req, res, 'Se creó correctamente');
     }).catch((e) => {
       res.status(400).json({
         finalizado: false,
@@ -56,34 +92,6 @@ function listar(req, res) {
     });
   }
 
-  function buscar(req, res) {
-    models.Usuario.findOne({
-      where: {
-        id: req.params.id
-      }
-    }).then((respuesta) => {
-      if (respuesta != null) {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'La consulta fue un exito',
-          datos: respuesta
-        });
-      }
-      else {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'No se encontró el registro',
-          datos: respuesta
-        });
-      }
-    }).catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrió un error en la consulta',
-        datos: error
-      });
-    });
-  }
 
   function actualizar(req, res) {
     models.Usuario.update({
@@ -100,17 +108,13 @@ function listar(req, res) {
       correo: req.body.correo,
       imagen: req.body.imagen,
       usuario: req.body.usuario,
-      contrasena: req.body.contrasena
+      password: req.body.password
     }, {
       where: {
         id: req.params.id
       }
-    }).then((respuesta) => {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'El dato fue actualizado correctamente',
-        datos: respuesta
-      });
+    }).then(() => {
+      buscar(req, res, 'El dato se actualizó correctamente');
     }).catch((error) => {
       res.status(400).send({
         finalizado: false,
