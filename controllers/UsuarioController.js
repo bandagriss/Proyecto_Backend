@@ -1,11 +1,13 @@
 const models = require('../models');
+const libs = require('../libs');
+
 
 function buscar(req, res, mensaje) {
   models.Usuario.findOne({
     where: {
       id: req.params.id
     },
-    attributes: { exclude: ['password', 'refresh_token'] },    
+    attributes: { exclude: ['password', 'refresh_token'] },
     include: [
       {
         model: models.Rol
@@ -16,25 +18,13 @@ function buscar(req, res, mensaje) {
     ]
   }).then((respuesta) => {
     if (respuesta != null) {
-      res.status(200).send({
-        finalizado: true,
-        mensaje,
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, mensaje);
     }
     else {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'No se encontró el registro',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'No se encontró el registro');
     }
   }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error en la consulta',
-      datos: error
-    });
+    libs.Error(res, error, 'Ocurrió un error en la consulta');
   });
 }
 
@@ -50,113 +40,63 @@ function listar(req, res) {
     }, {
       model: models.Institucion
     }]
-  }).then((users) => {
-    res.status(200).json({
-      finalizado: true,
-      mensaje: 'Lista de Usuarios encontrados',
-      datos: users
-    });
+  }).then((respuesta) => {
+    libs.Success(res, respuesta, 'Lista de Usuarios encontrados' );
   }).catch((e) => {
-    res.status(400).json({ error: e.message });
+    libs.Error(res, e, 'Ocurrio un error al listar los usuarios');
   });
-                        }
+}
 
-  function crear(req, res) {
-    models.Usuario.create({
-      username: req.body.username,
-      password: req.body.password,
-      nombres: req.body.nombres,
-      fid_rol: req.body.fid_rol,
-      fid_institucion: req.body.fid_institucion,
-      apellido_paterno: req.body.apellido_paterno.trim(),
-      apellido_materno: req.body.apellido_materno.trim(),
-      genero: req.body.genero,
-      fecha_nacimiento: req.body.fecha_nacimiento,
-      nro_carnet: req.body.nro_carnet,
-      direccion: req.body.direccion,
-      telefono: req.body.telefono,
-      correo: req.body.correo,
-      imagen: req.body.imagen
-    }, {
-      attributes: { exclude: ['refresh_token'] }
-    }).then((newUser) => {
-      req.params.id = newUser.id;
-      buscar(req, res, 'Se creó correctamente');
-    }).catch((e) => {
-      res.status(400).json({
-        finalizado: false,
-        mensaje: 'Ocurrio un error al crear el usuario',
-        error: e.errors[0].message
-      });
-      // res.status(400).json({ error: e });
-    });
-  }
+function crear(req, res) {
+  const columnas = ['nombres', 'fid_rol', 'fid_institucion', 'apellido_paterno', 'apellido_materno', 'telefono', 'correo', 'username', 'nro_carnet'];
+  const objeto = libs.optenerParametros(req, columnas);
+  objeto.password = '123456';
+  models.Usuario.create(objeto, {
+    attributes: { exclude: ['refresh_token'] }
+  }).then((newUser) => {
+    req.params.id = newUser.id;
+    buscar(req, res, 'Se creó correctamente');
+  }).catch((e) => {
+    libs.Error(res, e, 'Ocurrio un error al crear el usuario');
+  });
+}
 
 
-  function actualizar(req, res) {
-    models.Usuario.update({
-      nombres: req.body.nombres,
-      fid_rol: req.body.fid_rol,
-      fid_institucion: req.body.fid_institucion,
-      apellido_paterno: req.body.apellido_paterno,
-      apellido_materno: req.body.apellido_materno,
-      genero: req.body.genero,
-      fecha_nacimiento: req.body.fecha_nacimiento,
-      nro_carnet: req.body.nro_carnet,
-      direccion: req.body.direccion,
-      telefono: req.body.telefono,
-      correo: req.body.correo,
-      imagen: req.body.imagen,
-      usuario: req.body.usuario,
-      password: req.body.password
-    }, {
-      where: {
-        id: req.params.id
-      }
-    }).then(() => {
-      buscar(req, res, 'El dato se actualizó correctamente');
-    }).catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrió un error al actualizar',
-        datos: error
-      });
-    });
-  }
+function actualizar(req, res) {
+  const columnas = ['nombres', 'fid_rol', 'fid_institucion', 'apellido_paterno', 'apellido_materno', 'telefono', 'correo', 'username', 'nro_carnet'];
+  const objeto = libs.optenerParametros(req, columnas);
+  models.Usuario.update(objeto, {
+    where: {
+      id: req.params.id
+    }
+  }).then(() => {
+    buscar(req, res, 'El dato se actualizó correctamente');
+  }).catch((error) => {
+    libs.Error(res, error, 'Ocurrió un error al actualizar el dato');
+  });
+}
 
-  function eliminar(req, res) {
-    models.Usuario.destroy({
-      where: {
-        id: req.params.id
-      }
-    }).then((respuesta) => {
-      if (respuesta > 0) {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'El registro se eliminó exitosamente',
-          datos: respuesta
-        });
-      }
-      else {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'No se encontró ningún registro',
-          datos: respuesta
-        });
-      }
-    }).catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrió un error al eliminar el registro',
-        datos: error
-      });
-    });
-  }
+function eliminar(req, res) {
+  models.Usuario.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then((respuesta) => {
+    if (respuesta > 0) {
+      libs.Success(res, respuesta, 'El registro se eliminó exitosamente');
+    }
+    else {
+      libs.Success(res, respuesta, 'No se encontró ningún registro');
+    }
+  }).catch((error) => {
+    libs.Error(res, error, 'Ocurrió un error al eliminar el registro');
+  });
+}
 
-  module.exports = {
-    listar,
-    crear,
-    buscar,
-    actualizar,
-    eliminar
-  };
+module.exports = {
+  listar,
+  crear,
+  buscar,
+  actualizar,
+  eliminar
+};
