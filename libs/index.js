@@ -18,10 +18,10 @@ function Success(res, datos, mensaje) {
   });
 }
 
-function Error(res, error, mensaje) {
+function Error(res, error) {
   res.status(400).send({
     finalizado: false,
-    mensaje,
+    mensaje: 'Ocurrió un error al procesar la consulta',
     error
   });
 }

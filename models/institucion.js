@@ -20,9 +20,6 @@ module.exports = (sequelize, DataTypes) => {
     Institucion.hasMany(models.Proyecto, {
       foreignKey: 'fid_institucion'
     });
-    Institucion.hasMany(models.Financiador, {
-      foreignKey: 'fid_institucion'
-    });
     Institucion.hasMany(models.Usuario, {
       foreignKey: 'fid_institucion'
     });

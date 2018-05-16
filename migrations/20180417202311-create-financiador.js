@@ -24,7 +24,6 @@ module.exports = {
       type: Sequelize.DATE
     },
     codigo_registro: {
-      allowNull: false,
       type: Sequelize.STRING
     },
     vision: {
