@@ -1,5 +1,7 @@
 const models = require('../models');
 const libs = require('../libs');
+const multer = require('multer');
+const upload = multer({ dest: './public/images/financiadores/' });
 
 function columnas() {
   return ['nombre', 'procedencia', 'descripcion', 'logo', 'fecha_fundacion', 'codigo_registro', 'vision', 'mision', 'pais_origen'];
@@ -66,11 +68,21 @@ function eliminar(req, res) {
   });
 }
 
+function imagen(req, res) {
+  if (!req.file) {
+    libs.Error(res, 'La imagen no se cargo');
+  }
+  else {
+    libs.Success(res, req.file, 'La imagen se cargo con éxito');
+  }
+}
+
 module.exports = {
   listar,
   crear,
   actualizar,
   buscar,
-  eliminar
+  eliminar,
+  imagen
 };
 
