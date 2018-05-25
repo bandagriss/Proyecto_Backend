@@ -7,7 +7,12 @@ function authenticate(req, res, next) {
   models.Usuario.findOne({
     where: {
       username: req.body.username
-    }
+    },
+    include: [{
+      model: models.Rol
+    }, {
+      model: models.Institucion
+    }]
   }).then((user) => {
     if (user && user.comparePassword(req.body.password, user.password)) {
       req.dbUsuario = user;
@@ -53,8 +58,12 @@ function returnJWT(req, res) {
   if (req.dbUsuario && req.token) {
     const data = {};
     data.nombres = req.dbUsuario.nombres;
-    data.fid_rol = req.dbUsuario.fid_rol;
-    data.fid_institucion = req.dbUsuario.fid_institucion;
+    data.apellido_paterno = req.dbUsuario.apellido_paterno;
+    data.apellido_paterno = req.dbUsuario.apellido_paterno;
+    data.apellido_materno = req.dbUsuario.apellido_materno;
+    data.imagen_usuario = req.dbUsuario.imagen;
+    data.institucion = req.dbUsuario.Institucion.nombre;
+    data.rol_nombre = req.dbUsuario.Rol.nombre;
     
     res.status(201).json({ token: req.token, refresh_token: req.dbUsuario.refresh_token, data });
   }
