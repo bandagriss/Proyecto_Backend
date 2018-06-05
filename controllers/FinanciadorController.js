@@ -1,7 +1,6 @@
 const models = require('../models');
 const libs = require('../libs');
-const multer = require('multer');
-const upload = multer({ dest: './public/images/financiadores/' });
+
 
 function columnas() {
   return ['nombre', 'procedencia', 'descripcion', 'logo', 'fecha_fundacion', 'codigo_registro', 'vision', 'mision', 'pais_origen'];

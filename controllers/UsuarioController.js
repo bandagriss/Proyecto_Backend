@@ -41,7 +41,7 @@ function listar(req, res) {
       model: models.Institucion
     }]
   }).then((respuesta) => {
-    libs.Success(res, respuesta, 'Lista de Usuarios encontrados' );
+    libs.Success(res, respuesta, 'Lista de Usuarios encontrados');
   }).catch((e) => {
     libs.Error(res, e, 'Ocurrio un error al listar los usuarios');
   });
