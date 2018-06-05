@@ -62,9 +62,9 @@ function returnJWT(req, res) {
     data.apellido_paterno = req.dbUsuario.apellido_paterno;
     data.apellido_materno = req.dbUsuario.apellido_materno;
     data.imagen_usuario = req.dbUsuario.imagen;
-    data.institucion = req.dbUsuario.Institucion.nombre;
+    data.institucion_nombre = req.dbUsuario.Institucion.nombre;
+    data.institucion = req.dbUsuario.Institucion.id;
     data.rol_nombre = req.dbUsuario.Rol.nombre;
-    
     res.status(201).json({ token: req.token, refresh_token: req.dbUsuario.refresh_token, data });
   }
   else {

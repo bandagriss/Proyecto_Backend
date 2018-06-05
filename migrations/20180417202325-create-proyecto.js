@@ -31,7 +31,7 @@ module.exports = {
       type: Sequelize.STRING
     },
     codigo_proyecto: {
-      allowNull: false,
+      allowNull: true,
       type: Sequelize.STRING
     },
     fecha_inicio: {
