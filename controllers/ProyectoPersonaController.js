@@ -1,4 +1,23 @@
 const models = require('../models');
+const libs = require('../libs');
+
+function buscar(req, res, objeto, mensaje) {
+  models.ProyectoPersona.findOne({
+    where: {
+      id: objeto.id
+    },
+    include: [
+      { model: models.Usuario }
+    ]
+  }).then((respuesta) => {
+    if (respuesta != null) {
+      libs.Success(res, respuesta, mensaje);
+    }
+    else {
+      libs.Success(res, respuesta, 'No se encontró el registro');
+    }
+  }).catch(error => libs.Error(res, error));
+}
 
 function listar(req, res) {
   models.ProyectoPersona.findAll()
@@ -27,26 +46,14 @@ function listar(req, res) {
 }
 
 function crear(req, res) {
-  console.log("===================>", "llega aqui");
   models.ProyectoPersona.create({
     fid_proyecto: req.body.fid_proyecto,
     fid_persona: req.body.fid_persona
-    // detalle: req.body.detalle
   })
     .then((respuestaProyectoPersona) => {
-      res.status(201).send({
-        finalizado: true,
-        mensaje: 'El proyecto asignado a una persona se creó satisfactoriamente',
-        datos: respuestaProyectoPersona
-      });
+      buscar(req, res, respuestaProyectoPersona, 'El proyecto asigando a una persona se creó satisfactoriamente');
     })
-    .catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrió un problema al guardar el registro',
-        datos: error
-      });
-    });
+    .catch(error => libs.Error(res, error));
 }
 
 function actualizar(req, res) {
@@ -59,48 +66,11 @@ function actualizar(req, res) {
       id: req.params.id
     }
   }).then((respuesta) => {
-    res.status(200).send({
-      finalizado: true,
-      mensaje: 'El dato fue actualizado correctamente',
-      datos: respuesta
-    });
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error al actualizar',
-      datos: error
-    });
-  });
+    libs.Success(res, respuesta, 'El dato fue actualizado correctamente');
+  }).catch(error => libs.Error(res, error));
 }
 
-function buscar(req, res) {
-  models.ProyectoPersona.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then((respuesta) => {
-    if (respuesta != null) {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'La consulta fue un exito',
-        datos: respuesta
-      });
-    }
-    else {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'No se encontró el registro',
-        datos: respuesta
-      });
-    }
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error en la consulta',
-      datos: error
-    });
-  });
-}
+
 
 function eliminar(req, res) {
   models.ProyectoPersona.destroy({
@@ -109,26 +79,24 @@ function eliminar(req, res) {
     }
   }).then((respuesta) => {
     if (respuesta > 0) {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'El registro se eliminó exitosamente',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'El registro se eliminó exitosamente');
     }
     else {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'No se encontró ningún registro',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'No se encontró ningún registro');
     }
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error al eliminar el registro',
-      datos: error
-    });
-  });
+  }).catch(error => libs.Error(res, error));
+}
+
+function listarByProyecto(req, res) {
+  models.ProyectoPersona.findAll({
+    where: { fid_proyecto: req.params.id },
+    include: [
+      {
+        model: models.Usuario
+      }]
+  }).then((respuesta) => {
+    libs.Success(res, respuesta, 'La consulta fue un éxito');
+  }).catch(error => libs.Error(res, error));
 }
 
 module.exports = {
@@ -136,5 +104,6 @@ module.exports = {
   crear,
   actualizar,
   buscar,
-  eliminar
+  eliminar,
+  listarByProyecto
 };
