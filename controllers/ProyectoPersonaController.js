@@ -7,7 +7,10 @@ function buscar(req, res, objeto, mensaje) {
       id: objeto.id
     },
     include: [
-      { model: models.Usuario }
+      {
+        model: models.Usuario,
+        attributes: ['id', 'nombres']
+      }
     ]
   }).then((respuesta) => {
     if (respuesta != null) {
@@ -92,7 +95,8 @@ function listarByProyecto(req, res) {
     where: { fid_proyecto: req.params.id },
     include: [
       {
-        model: models.Usuario
+        model: models.Usuario,
+        attributes: ['id', 'nombres']
       }]
   }).then((respuesta) => {
     libs.Success(res, respuesta, 'La consulta fue un éxito');
