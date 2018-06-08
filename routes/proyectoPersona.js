@@ -8,11 +8,11 @@ const ProyectoPersonaCtrl = require('../controllers/ProyectoPersonaController');
 
 const secret = config.jwt.jwtSecret;
 
-router.route('/departamentos')
+router.route('/proyecto_persona')
   .get(jwt({ secret }), ProyectoPersonaCtrl.listar)
   .post(jwt({ secret }), ProyectoPersonaCtrl.crear);
 
-router.route('/departamentos/:id')
+router.route('/proyecto_persona/:id')
   .get(jwt({ secret }), ProyectoPersonaCtrl.buscar)
   .put(jwt({ secret }), ProyectoPersonaCtrl.actualizar)
   .delete(jwt({ secret }), ProyectoPersonaCtrl.eliminar);

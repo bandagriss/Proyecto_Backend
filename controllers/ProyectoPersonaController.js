@@ -27,10 +27,11 @@ function listar(req, res) {
 }
 
 function crear(req, res) {
+  console.log("===================>", "llega aqui");
   models.ProyectoPersona.create({
     fid_proyecto: req.body.fid_proyecto,
-    fid_persona: req.body.fid_persona,
-    detalle: req.body.detalle
+    fid_persona: req.body.fid_persona
+    // detalle: req.body.detalle
   })
     .then((respuestaProyectoPersona) => {
       res.status(201).send({
