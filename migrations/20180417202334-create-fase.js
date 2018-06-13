@@ -16,6 +16,10 @@ module.exports = {
       }
     },
     nombre: {
+      allowNull: false,
+      type: Sequelize.STRING
+    },
+    descripcion: {
       type: Sequelize.STRING
     },
     fecha_inicio: {
@@ -27,7 +31,7 @@ module.exports = {
       type: Sequelize.DATE
     },
     gastos: {
-      allowNull: false,
+      allowNull: true,
       type: Sequelize.INTEGER
     },
     estado: {
@@ -38,12 +42,6 @@ module.exports = {
     },
     adjunto: {
       type: Sequelize.STRING
-    },
-    fecha_inicio_real: {
-      type: Sequelize.DATE
-    },
-    fecha_fin_real: {
-      type: Sequelize.DATE
     },
     createdAt: {
       allowNull: false,

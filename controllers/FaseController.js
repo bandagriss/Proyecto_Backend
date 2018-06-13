@@ -30,13 +30,12 @@ function crear(req, res) {
   models.Fase.create({
     fid_proyecto: req.body.fid_proyecto,
     nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
     fecha_inicio: req.body.fecha_inicio,
     fecha_fin: req.body.fecha_fin,
     gastos: req.body.gastos,
     estado: req.body.estado,
-    adjunto: req.body.adjunto,
-    fecha_inicio_real: req.body.fecha_inicio_real,
-    fecha_fin_real: req.body.fecha_fin_real
+    adjunto: req.body.adjunto
   })
     .then((respuestaFase) => {
       res.status(201).send({
@@ -58,13 +57,12 @@ function actualizar(req, res) {
   models.Fase.update({
     fid_proyecto: req.body.fid_proyecto,
     nombre: req.body.nombre,
+    descripcion: req.body.descripcion,
     fecha_inicio: req.body.fecha_inicio,
     fecha_fin: req.body.fecha_fin,
     gastos: req.body.gastos,
     estado: req.body.estado,
     adjunto: req.body.adjunto,
-    fecha_inicio_real: req.body.fecha_inicio_real,
-    fecha_fin_real: req.body.fecha_fin_real
   }, {
     where: {
       id: req.params.id
