@@ -1,85 +1,37 @@
 const models = require('../models');
+const libs = require('../libs');
+
+function columnas() {
+  return ['fid_proyecto', 'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin'];
+}
 
 function listar(req, res) {
   models.Fase.findAll()
     .then((respuesta) => {
       if (respuesta.length > 0) {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'La consulta fue un exito',
-          datos: respuesta
-        });
+        libs.Success(res, respuesta, 'La consulta fue un éxito');
       }
       else {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'No se encontraron resultados',
-          datos: respuesta
-        });
+        libs.Success(res, respuesta, 'No se encontraron resultados');
       }
-    }).catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrio un error al procesar la consulta',
-        datos: error
-      });
-    });
+    }).catch(error => libs.Error(res, error));
 }
 
 function crear(req, res) {
-  models.Fase.create({
-    fid_proyecto: req.body.fid_proyecto,
-    nombre: req.body.nombre,
-    descripcion: req.body.descripcion,
-    fecha_inicio: req.body.fecha_inicio,
-    fecha_fin: req.body.fecha_fin,
-    gastos: req.body.gastos,
-    estado: req.body.estado,
-    adjunto: req.body.adjunto
-  })
-    .then((respuestaFase) => {
-      res.status(201).send({
-        finalizado: true,
-        mensaje: 'La fase se creó satisfactoriamente',
-        datos: respuestaFase
-      });
-    })
-    .catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrió un problema al guardar el registro',
-        datos: error
-      });
-    });
+  const objeto = libs.optenerParametros(req, columnas());
+  models.Fase.create(objeto)
+    .then(respuestaFase => libs.Success(res, respuestaFase, 'La fase se creó satisfactoriamente'))
+    .catch(error => libs.Error(res, error));
 }
 
 function actualizar(req, res) {
-  models.Fase.update({
-    fid_proyecto: req.body.fid_proyecto,
-    nombre: req.body.nombre,
-    descripcion: req.body.descripcion,
-    fecha_inicio: req.body.fecha_inicio,
-    fecha_fin: req.body.fecha_fin,
-    gastos: req.body.gastos,
-    estado: req.body.estado,
-    adjunto: req.body.adjunto,
-  }, {
+  const objeto = libs.optenerParametros(req, columnas());
+  models.Fase.update(objeto, {
     where: {
       id: req.params.id
     }
-  }).then((respuesta) => {
-    res.status(200).send({
-      finalizado: true,
-      mensaje: 'El dato fue actualizado correctamente',
-      datos: respuesta
-    });
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error al actualizar',
-      datos: error
-    });
-  });
+  }).then(respuesta => libs.Success(res, respuesta, 'El dato fue actualizado correctamente'))
+    .catch(error => libs.Error(res, error));
 }
 
 function buscar(req, res) {
@@ -89,26 +41,12 @@ function buscar(req, res) {
     }
   }).then((respuesta) => {
     if (respuesta != null) {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'La consulta fue un exito',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'La consulta fue un éxito');
     }
     else {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'No se encontró el registro',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'No se encontraron resultados');
     }
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error en la consulta',
-      datos: error
-    });
-  });
+  }).catch(error => libs.Error(res, error));
 }
 
 function eliminar(req, res) {
@@ -118,26 +56,12 @@ function eliminar(req, res) {
     }
   }).then((respuesta) => {
     if (respuesta > 0) {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'El registro se eliminó exitosamente',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'El registro se eliminó exitosamente');
     }
     else {
-      res.status(200).send({
-        finalizado: true,
-        mensaje: 'No se encontró ningún registro',
-        datos: respuesta
-      });
+      libs.Success(res, respuesta, 'No se encontró ningún registro');
     }
-  }).catch((error) => {
-    res.status(400).send({
-      finalizado: false,
-      mensaje: 'Ocurrió un error al eliminar el registro',
-      datos: error
-    });
-  });
+  }).catch(error => libs.Error(res, error));
 }
 
 module.exports = {

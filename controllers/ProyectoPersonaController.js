@@ -1,6 +1,10 @@
 const models = require('../models');
 const libs = require('../libs');
 
+function columnas() {
+  return ['fid_proyecto', 'fid_persona', 'detalle'];
+}
+
 function buscar(req, res, objeto, mensaje) {
   models.ProyectoPersona.findOne({
     where: {
@@ -26,33 +30,17 @@ function listar(req, res) {
   models.ProyectoPersona.findAll()
     .then((respuesta) => {
       if (respuesta.length > 0) {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'La consulta fue un exito',
-          datos: respuesta
-        });
+        libs.Success(res, respuesta, 'La consulta fue un éxito');
       }
       else {
-        res.status(200).send({
-          finalizado: true,
-          mensaje: 'La consulta fue un exito',
-          datos: 'No se encontraron resultados en la búsqueda'
-        });
+        libs.Success(res, respuesta, 'No se encontraron resultados en la búsqueda');
       }
-    }).catch((error) => {
-      res.status(400).send({
-        finalizado: false,
-        mensaje: 'Ocurrio un error al procesar la consulta',
-        datos: error
-      });
-    });
+    }).catch(error => libs.Error(res, error));
 }
 
 function crear(req, res) {
-  models.ProyectoPersona.create({
-    fid_proyecto: req.body.fid_proyecto,
-    fid_persona: req.body.fid_persona
-  })
+  const objeto = libs.optenerParametros(req, columnas());
+  models.ProyectoPersona.create(objeto)
     .then((respuestaProyectoPersona) => {
       buscar(req, res, respuestaProyectoPersona, 'El proyecto asigando a una persona se creó satisfactoriamente');
     })
@@ -60,11 +48,8 @@ function crear(req, res) {
 }
 
 function actualizar(req, res) {
-  models.ProyectoPersona.update({
-    fid_proyecto: req.body.fid_proyecto,
-    fid_persona: req.body.fid_persona,
-    detalle: req.body.detalle
-  }, {
+  const objeto = libs.optenerParametros(req, columnas());
+  models.ProyectoPersona.update(objeto, {
     where: {
       id: req.params.id
     }
@@ -72,8 +57,6 @@ function actualizar(req, res) {
     libs.Success(res, respuesta, 'El dato fue actualizado correctamente');
   }).catch(error => libs.Error(res, error));
 }
-
-
 
 function eliminar(req, res) {
   models.ProyectoPersona.destroy({
