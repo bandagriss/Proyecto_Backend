@@ -7,7 +7,10 @@ function columnas() {
 
 function listar(req, res) {
   models.Proyecto.findAll({
-    include: [models.Fase]
+    include: [{
+      model: models.Fase
+    }],
+    order: [[models.Fase, 'createdAt', 'ASC']]
   })
     .then((respuesta) => {
       if (respuesta.length > 0) {
