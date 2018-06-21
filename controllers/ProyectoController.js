@@ -6,7 +6,9 @@ function columnas() {
 }
 
 function listar(req, res) {
-  models.Proyecto.findAll()
+  models.Proyecto.findAll({
+    include: [models.Fase]
+  })
     .then((respuesta) => {
       if (respuesta.length > 0) {
         libs.Success(res, respuesta, 'La consulta fue un éxito');

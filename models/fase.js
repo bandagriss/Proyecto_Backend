@@ -10,9 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM,
       values: ['creado', 'en proceso', 'finalizado']
     },
-    adjunto: DataTypes.STRING,
-    fecha_inicio_real: DataTypes.DATE,
-    fecha_fin_real: DataTypes.DATE
+    adjunto: DataTypes.STRING
   }, {
     tableName: 'fases',
     timestamps: true,
