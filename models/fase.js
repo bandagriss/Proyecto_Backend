@@ -6,6 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     fecha_inicio: DataTypes.DATE,
     fecha_fin: DataTypes.DATE,
     gastos: DataTypes.INTEGER,
+    descripcion: DataTypes.STRING,
     estado: {
       type: DataTypes.ENUM,
       values: ['creado', 'en proceso', 'finalizado']

@@ -2,7 +2,22 @@ const models = require('../models');
 const libs = require('../libs');
 
 function columnas() {
-  return ['fid_proyecto', 'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin'];
+  return ['fid_proyecto', 'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin', 'gastos', 'estado'];
+}
+
+function buscar(req, res) {
+  models.Fase.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then((respuesta) => {
+    if (respuesta != null) {
+      libs.Success(res, respuesta, 'El dato fue actualizado correctamente');
+    }
+    else {
+      libs.Success(res, respuesta, 'No se encontraron resultados');
+    }
+  }).catch(error => libs.Error(res, error));
 }
 
 function listar(req, res) {
@@ -30,23 +45,8 @@ function actualizar(req, res) {
     where: {
       id: req.params.id
     }
-  }).then(respuesta => libs.Success(res, respuesta, 'El dato fue actualizado correctamente'))
+  }).then(() => buscar(req, res))
     .catch(error => libs.Error(res, error));
-}
-
-function buscar(req, res) {
-  models.Fase.findOne({
-    where: {
-      id: req.params.id
-    }
-  }).then((respuesta) => {
-    if (respuesta != null) {
-      libs.Success(res, respuesta, 'La consulta fue un éxito');
-    }
-    else {
-      libs.Success(res, respuesta, 'No se encontraron resultados');
-    }
-  }).catch(error => libs.Error(res, error));
 }
 
 function eliminar(req, res) {
