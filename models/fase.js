@@ -10,8 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     estado: {
       type: DataTypes.ENUM,
       values: ['creado', 'en proceso', 'finalizado']
-    },
-    adjunto: DataTypes.STRING
+    }
   }, {
     tableName: 'fases',
     timestamps: true,
@@ -20,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
   Fase.associate = (models) => {
     Fase.belongsTo(models.Proyecto, {
       foreignKey: 'fid_proyecto'
+    });
+    Fase.hasMany(models.Documento, {
+      foreignKey: 'fid_fase'
     });
   };
   return Fase;

@@ -40,9 +40,6 @@ module.exports = {
       type: Sequelize.ENUM,
       values: ['creado', 'en proceso', 'finalizado']
     },
-    adjunto: {
-      type: Sequelize.STRING
-    },
     createdAt: {
       allowNull: false,
       type: Sequelize.DATE
