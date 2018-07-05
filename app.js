@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 // var index = require('./routes/index');
 var departamentos = require('./routes/departamentos');
@@ -18,6 +19,9 @@ var autenticacion = require('./routes/auth');
 var proyectoPersona = require('./routes/proyectoPersona');
 
 var app = express();
+
+// adicionando fileupload para subir archivos
+app.use(fileUpload());
 
 // adiciionando headers
 app.use(cors({
