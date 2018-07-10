@@ -77,7 +77,7 @@ function guardar(req, res) {
     const objeto = {};
     objeto.fid_fase = req.params.id;
     objeto.detalle = `files/${fecha}_${archivo.name}`;
-    objeto.nombre = archivo.nombre;
+    objeto.nombre = archivo.name;
     models.Documento.create(objeto)
       .then(respuestaDocumento => libs.Success(res, respuestaDocumento, 'El Documento se creó satisfactoriamente'))
       .catch(error => libs.Error(res, error));

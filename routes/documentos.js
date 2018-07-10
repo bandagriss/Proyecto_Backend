@@ -8,11 +8,11 @@ const DocumentoCtrl = require('../controllers/DocumentoController');
 
 const secret = config.jwt.jwtSecret;
 
-router.route('/documento')
+router.route('/documentos')
   .get(jwt({ secret }), DocumentoCtrl.listar)
   .post(jwt({ secret }), DocumentoCtrl.crear);
 
-router.route('/documento/:id')
+router.route('/documentos/:id')
   .get(jwt({ secret }), DocumentoCtrl.buscar)
   .put(jwt({ secret }), DocumentoCtrl.actualizar)
   .post(jwt({ secret }), DocumentoCtrl.guardar)
