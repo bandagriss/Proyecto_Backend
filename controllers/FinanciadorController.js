@@ -67,13 +67,28 @@ function eliminar(req, res) {
   });
 }
 
+// function imagen(req, res) {
+//   if (!req.files) {
+//     libs.Error(res, 'La imagen no se cargo');
+//   }
+//   else {
+//     libs.Success(res, req.files, 'La imagen se cargo con éxito');
+//   }
+// }
+
 function imagen(req, res) {
-  if (!req.file) {
-    libs.Error(res, 'La imagen no se cargo');
+  if (!req.files) {
+    libs.Error(res, 'No se encontro el archivo');
   }
-  else {
-    libs.Success(res, req.file, 'La imagen se cargo con éxito');
-  }
+  const fecha = Date.parse(new Date());
+  const archivo = req.files.avatar;
+  const rutaArchivo = `./public/images/${fecha}_${archivo.name}`;
+  archivo.mv(rutaArchivo, (err) => {
+    if (err) {
+      libs.Error(res, err);
+    }
+    libs.Success(res, rutaArchivo, 'La imagen se cargo con éxito');
+  });
 }
 
 module.exports = {
@@ -82,6 +97,7 @@ module.exports = {
   actualizar,
   buscar,
   eliminar,
+  // imagen,
   imagen
 };
 

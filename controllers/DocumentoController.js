@@ -2,7 +2,7 @@ const models = require('../models');
 const libs = require('../libs');
 
 function columnas() {
-  return ['fid_fase', 'detalle'];
+  return ['fid_fase', 'detalle', 'nombre'];
 }
 
 function buscar(req, res) {
@@ -64,10 +64,32 @@ function eliminar(req, res) {
   }).catch(error => libs.Error(res, error));
 }
 
+function guardar(req, res) {
+  if (!req.files) {
+    libs.Error(res, 'No se encontro el archivo');
+  }
+  const fecha = Date.parse(new Date());
+  const archivo = req.files.file;
+  archivo.mv(`./public/files/${fecha}_${archivo.name}`, (err) => {
+    if (err) {
+      libs.Error(res, err);
+    }
+    const objeto = {};
+    objeto.fid_fase = req.params.id;
+    objeto.detalle = `files/${fecha}_${archivo.name}`;
+    objeto.nombre = archivo.nombre;
+    models.Documento.create(objeto)
+      .then(respuestaDocumento => libs.Success(res, respuestaDocumento, 'El Documento se creó satisfactoriamente'))
+      .catch(error => libs.Error(res, error));
+  });
+}
+
+
 module.exports = {
   listar,
   crear,
   actualizar,
   buscar,
-  eliminar
+  eliminar,
+  guardar
 };

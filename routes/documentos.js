@@ -15,6 +15,7 @@ router.route('/documento')
 router.route('/documento/:id')
   .get(jwt({ secret }), DocumentoCtrl.buscar)
   .put(jwt({ secret }), DocumentoCtrl.actualizar)
+  .post(jwt({ secret }), DocumentoCtrl.guardar)
   .delete(jwt({ secret }), DocumentoCtrl.eliminar);
 
 module.exports = router;

@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
   var Documento = sequelize.define('Documento', {
     detalle: DataTypes.STRING,
-    fid_fase: DataTypes.INTEGER
+    fid_fase: DataTypes.INTEGER,
+    nombre: DataTypes.STRING
   }, {
     tableName: 'documentos',
     timestamps: true,

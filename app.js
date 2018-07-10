@@ -17,6 +17,7 @@ var proyectos = require('./routes/proyectos');
 var fases = require('./routes/fases');
 var autenticacion = require('./routes/auth');
 var proyectoPersona = require('./routes/proyectoPersona');
+var documentos = require('./routes/documentos');
 
 var app = express();
 
@@ -47,7 +48,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', autenticacion);
-app.use('/api/v1', [departamentos, institucion, roles, usuarios, financiadores, proyectos, fases, proyectoPersona]);
+app.use('/api/v1', [departamentos, institucion, roles, usuarios, financiadores, proyectos, fases, proyectoPersona, documentos]);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
