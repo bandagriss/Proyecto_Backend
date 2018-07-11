@@ -16,7 +16,12 @@ function generarDatosProyecto(idProyecto) {
           model: models.Financiador
         },
         {
-          model: models.Fase
+          model: models.Fase,
+          include: [
+            {
+              model: models.Documento
+            }
+          ]
         }
       ],
         order: [[models.Fase, 'createdAt', 'ASC']]

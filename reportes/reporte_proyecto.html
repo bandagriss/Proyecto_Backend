@@ -17,6 +17,7 @@
      .datoProyecto {
        background-color: #a6cdec;
        padding: 2px 5px 2px 2px;
+       font-weight: bold;
      }
     </style>
   </head>
@@ -27,28 +28,28 @@
     <hr/>
     <table>
       <tr>
-        <td class="contenido datoProyecto" width="20%">
+        <td class="contenido datoProyecto" width="18%">
           Fecha Inicio:
         </td>
         <td class="contenido">
-          <%= fecha_inicio %>
+          <%= fecha_inicio.toLocaleDateString() %>
         </td>
         <td class="contenido datoProyecto" width="20%">
           Fecha Fin:
         </td>
         <td class="contenido">
-          <%= fecha_fin %>
+          <%= fecha_fin.toLocaleDateString() %>
         </td>
       </tr>
       <tr>
         <td class="contenido datoProyecto">
-          Institución
+          Institución:
         </td>
         <td class="contenido">
           <%= Institucion.nombre %>
         </td>
         <td class="contenido datoProyecto">
-          Financiador
+          Financiador:
         </td>
         <td class="contenido">
           <%= Financiador.nombre %>
@@ -56,7 +57,7 @@
       </tr>
       <tr>
         <td class="contenido datoProyecto">
-          Descripción
+          Descripción:
         </td>
         <td class="contenido">
           <%= descripcion %>
@@ -64,7 +65,7 @@
       </tr>
       <tr>
         <td class="contenido datoProyecto">
-          Objetivo
+          Objetivo:
         </td>
         <td class="contenido">
           <%= objetivo %>
@@ -72,38 +73,58 @@
       </tr>
       <tr>
         <td class="contenido datoProyecto">
-          Población Hombres
+          Población Hombres:
         </td>
         <td class="contenido">
           <%= poblacion_hombres %>
         </td>
         <td class="contenido datoProyecto">
-          Población Mujeres
+          Población Mujeres:
         </td>
         <td class="contenido">
           <%= poblacion_mujeres %>
         </td>
       </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td class="subtitulo"> <h3>Fases</h3></td>
-      </tr>
-      <% for(var i=0; i<Fases.length; i++) { %>
+    </table>
+    <div class="subtitulo"> <h3>Fases</h3></div>
+
+    <% var total = 0 %>
+    <% for(var i=0; i<Fases.length; i++) { %>
+      <table border="1">
         <tr>
-          <td class="contenido" width="400px">
-            <h4><%= Fases[i].nombre %></h4>
+          <td class="contenido" colspan="4" style="width:500px;">
+            <h4>Fase <%= i + 1 %>: &nbsp;&nbsp;<%= Fases[i].nombre %></h4>
           </td>
         </tr>
         <tr>
-            <td class="contenido datoProyecto" width="20%"> Descripción</td>
-            <td class="contenido" width="80%">
+            <td class="contenido datoProyecto">Fecha Inicio:</td>
+            <td class="contenido"><%= Fases[i].fecha_inicio.toLocaleDateString() %></td>
+            <td class="contenido datoProyecto">Fecha Fin:</td>
+            <td class="contenido"><%= Fases[i].fecha_fin.toLocaleDateString() %></td>
+        </tr>
+        <tr>
+            <td class="contenido datoProyecto"> Descripción:</td>
+            <td class="contenido">
               <%= Fases[i].descripcion %>
             </td>
         </tr>
+        <tr>
+            <td class="contenido datoProyecto">Estado:</td>
+            <td class="contenido"><%= Fases[i].estado %></td>
+            <td class="contenido datoProyecto">Gastos:</td>
+            <td class="contenido"><%= Fases[i].gastos %> Bs. <% total = total + parseInt(Fases[i].gastos) %></td>
+        </tr>
+        <tr>
+          <td class="contenido datoProyecto">Adjuntos</td>
+          <td class="contenido" colspan="4">
+          <% for(var j =0; j<Fases[i].Documentos.length; j++) { %>
+            <a href="http://localhost:3000<%= Fases[i].Documentos[j].detalle %>" target="_blank"><%= Fases[i].Documentos[j].nombre %></a>
+              <% } %>
+            </td>              
+        </tr>
+      </table>
       <% } %>
-    </table>
-    
+      
+      <div class="subtitulo"><h3>Total Inversión Proyecto <%= total %> Bs.</h3></div>
   </body>
 </html>
