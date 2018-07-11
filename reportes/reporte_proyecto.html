@@ -1,0 +1,109 @@
+<html>
+  <head>
+    <meta content="content" charset="utf-8" http-equiv="Content-Type" />
+    <style type="text/css">
+     body {
+       font-size: 12px;
+     }
+     .titulo {
+       font-size: 20px;
+     }
+     .subtitulo {
+       font-size: 16px;
+     }
+     .contenido {
+       font-size: 12px;
+     }
+     .datoProyecto {
+       background-color: #a6cdec;
+       padding: 2px 5px 2px 2px;
+     }
+    </style>
+  </head>
+  <body>
+    <center>
+      <h2 class="titulo">Proyecto <%= nombre %></h2>
+    </center>
+    <hr/>
+    <table>
+      <tr>
+        <td class="contenido datoProyecto" width="20%">
+          Fecha Inicio:
+        </td>
+        <td class="contenido">
+          <%= fecha_inicio %>
+        </td>
+        <td class="contenido datoProyecto" width="20%">
+          Fecha Fin:
+        </td>
+        <td class="contenido">
+          <%= fecha_fin %>
+        </td>
+      </tr>
+      <tr>
+        <td class="contenido datoProyecto">
+          Institución
+        </td>
+        <td class="contenido">
+          <%= Institucion.nombre %>
+        </td>
+        <td class="contenido datoProyecto">
+          Financiador
+        </td>
+        <td class="contenido">
+          <%= Financiador.nombre %>
+        </td>
+      </tr>
+      <tr>
+        <td class="contenido datoProyecto">
+          Descripción
+        </td>
+        <td class="contenido">
+          <%= descripcion %>
+        </td>
+      </tr>
+      <tr>
+        <td class="contenido datoProyecto">
+          Objetivo
+        </td>
+        <td class="contenido">
+          <%= objetivo %>
+        </td>
+      </tr>
+      <tr>
+        <td class="contenido datoProyecto">
+          Población Hombres
+        </td>
+        <td class="contenido">
+          <%= poblacion_hombres %>
+        </td>
+        <td class="contenido datoProyecto">
+          Población Mujeres
+        </td>
+        <td class="contenido">
+          <%= poblacion_mujeres %>
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="subtitulo"> <h3>Fases</h3></td>
+      </tr>
+      <% for(var i=0; i<Fases.length; i++) { %>
+        <tr>
+          <td class="contenido" width="400px">
+            <h4><%= Fases[i].nombre %></h4>
+          </td>
+        </tr>
+        <tr>
+            <td class="contenido datoProyecto" width="20%"> Descripción</td>
+            <td class="contenido" width="80%">
+              <%= Fases[i].descripcion %>
+            </td>
+        </tr>
+      <% } %>
+    </table>
+    
+  </body>
+</html>
