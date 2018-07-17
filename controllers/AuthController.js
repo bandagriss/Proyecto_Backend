@@ -57,6 +57,7 @@ function refreshJWT(req, res, next) {
 function returnJWT(req, res) {
   if (req.dbUsuario && req.token) {
     const data = {};
+    data.id = req.dbUsuario.id;
     data.nombres = req.dbUsuario.nombres;
     data.apellido_paterno = req.dbUsuario.apellido_paterno;
     data.apellido_paterno = req.dbUsuario.apellido_paterno;

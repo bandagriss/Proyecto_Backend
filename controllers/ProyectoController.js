@@ -69,10 +69,57 @@ function eliminar(req, res) {
   }).catch(error => libs.Error(res, error));
 }
 
+function listarProyectosPersonas(req, res) {
+  models.Proyecto.findAll({
+    include: [{
+      model: models.Fase
+    }, {
+      model: models.ProyectoPersona,
+      where: {
+        fid_persona: req.params.id_persona
+      }
+    }],
+    order: [[models.Fase, 'createdAt', 'ASC']]
+  })
+    .then((respuesta) => {
+      if (respuesta.length > 0) {
+        libs.Success(res, respuesta, 'La consulta fue un éxito');
+      }
+      else {
+        libs.Success(res, respuesta, 'No se encontraron resultados');
+      }
+    }).catch(error => libs.Error(res, error));
+}
+
+function listarProyectosInstitucion(req, res) {
+  models.Proyecto.findAll({
+    where: {
+      fid_institucion: req.params.id_departamento
+    },
+    include: [{
+      model: models.Fase
+    }, {
+      model: models.Institucion
+    }],
+    order: [[models.Fase, 'createdAt', 'ASC']]
+  })
+    .then((respuesta) => {
+      if (respuesta.length > 0) {
+        libs.Success(res, respuesta, 'La consulta fue un éxito');
+      }
+      else {
+        libs.Success(res, respuesta, 'No se encontraron resultados');
+      }
+    }).catch(error => libs.Error(res, error));
+}
+
+
 module.exports = {
   listar,
   crear,
   actualizar,
   buscar,
-  eliminar
+  eliminar,
+  listarProyectosPersonas,
+  listarProyectosInstitucion
 };

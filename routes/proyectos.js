@@ -17,4 +17,10 @@ router.route('/proyecto/:id')
   .put(jwt({ secret }), ProyectoCtrl.actualizar)
   .delete(jwt({ secret }), ProyectoCtrl.eliminar);
 
+router.route('/proyectos_usuarios/:id_persona')
+  .get(jwt({ secret }), ProyectoCtrl.listarProyectosPersonas);
+
+router.route('/proyectos_institucion/:id_departamento')
+  .get(jwt({ secret }), ProyectoCtrl.listarProyectosInstitucion);
+
 module.exports = router;
