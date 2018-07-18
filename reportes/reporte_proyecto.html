@@ -11,6 +11,7 @@
      }
      .subtitulo {
        font-size: 16px;
+       font-weight: bold;
      }
      .contenido {
        font-size: 12px;
@@ -28,7 +29,7 @@
        margin-left: -10px;
      }
      .nro-fase {
-       background-color: #ccf5d4;
+       background-color: #f1efef;
      }
      .titulo-fase {
        font-size: 14px;
@@ -44,7 +45,7 @@
       <img src="<%= logo %>" alt="Logo CEADL"
            height="78"
            width="152"
-          
+           
       />
     </div>
     <center>
@@ -119,11 +120,12 @@
         </td>
       </tr>
     </table>
-    <div class="subtitulo"> <h3>Fases</h3></div>
+    <div class="subtitulo"> <span>Fases</span></div>
 
     <% var total = 0 %>
     <% for(var i=0; i<Fases.length; i++) { %>
       <table width="510">
+        <br/>
         <tr>
           <td width="500" class="contenido nro-fase" colspan="4">
             <span class="titulo-fase">Fase <%= i + 1 %>:</span> &nbsp;&nbsp;<span class="nombre-fase"><%= Fases[i].nombre %></span>
@@ -136,24 +138,24 @@
           <td width="170" class="contenido guion-bajo"><%= Fases[i].fecha_fin.toLocaleDateString() %></td>
         </tr>
         <tr>
-            <td width="80" class="contenido datoProyecto"> Descripción:</td>
-            <td width="420" colspan="3" class="contenido guion-bajo">
-              <%= Fases[i].descripcion %>
-            </td>
+          <td width="80" class="contenido datoProyecto"> Descripción:</td>
+          <td width="420" colspan="3" class="contenido guion-bajo">
+            <%= Fases[i].descripcion %>
+          </td>
         </tr>
         <tr>
-            <td width="80" class="contenido datoProyecto">Estado:</td>
-            <td width="170" class="contenido guion-bajo"><%= Fases[i].estado %></td>
-            <td width="80" class="contenido datoProyecto">Gastos:</td>
-            <td width="170" class="contenido guion-bajo"><%= Fases[i].gastos %> Bs. <% total = total + parseInt(Fases[i].gastos) %></td>
+          <td width="80" class="contenido datoProyecto">Estado:</td>
+          <td width="170" class="contenido guion-bajo"><%= Fases[i].estado %></td>
+          <td width="80" class="contenido datoProyecto">Gastos:</td>
+          <td width="170" class="contenido guion-bajo"><%= Fases[i].gastos %> Bs. <% total = total + parseInt(Fases[i].gastos) %></td>
         </tr>
         <tr>
           <td width="80" class="contenido datoProyecto">Adjuntos</td>
           <td width="420" class="contenido guion-bajo" colspan="4">
-          <% for(var j =0; j<Fases[i].Documentos.length; j++) { %>
+            <% for(var j =0; j<Fases[i].Documentos.length; j++) { %>
             <a href="http://localhost:3000<%= Fases[i].Documentos[j].detalle %>" target="_blank"><%= Fases[i].Documentos[j].nombre %></a>
-              <% } %>
-            </td>              
+            <% } %>
+          </td>              
         </tr>
       </table>
       <% } %>
