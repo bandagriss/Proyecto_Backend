@@ -37,6 +37,11 @@ module.exports = {
         nombre: 'Coordinador',
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        nombre: 'Director',
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ], {});
 

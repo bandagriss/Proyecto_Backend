@@ -23,5 +23,8 @@
   "jwt": {
     "jwtSecret": "$eCrEt",
     "jwtDuration": "2 hours"
+  },
+  "url": {
+    "ruta": "http://localhost:3000/"
   }
 }

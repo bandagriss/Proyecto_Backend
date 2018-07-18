@@ -1,6 +1,7 @@
 const models = require('../models');
 const libs = require('../libs');
 const pdf = require('../libs/pdf_generator');
+const config = require('../config/config.json');
 
 function generarDatosProyecto(idProyecto) {
   return new Promise((resolve, reject) => {
@@ -24,7 +25,7 @@ function generarDatosProyecto(idProyecto) {
           ]
         }
       ],
-        order: [[models.Fase, 'createdAt', 'ASC']]
+      order: [[models.Fase, 'createdAt', 'ASC']]
     })
       .then(respuesta => resolve(respuesta))
       .catch(error => reject(error));
@@ -41,14 +42,16 @@ function reporteProyecto(req, res) {
         format: 'Letter',
         orientation: 'portrait',
         border: {
-          top: '1.5cm',
+          top: '0.5cm',
           left: '1.5cm',
           right: '1.5cm',
           bottom: '2cm'
         }
       };
-      console.log("===================>", JSON.parse(JSON.stringify(respuesta)));
-      return pdf.generarPDFaBuffer(html, respuesta, configPagina)
+      const logo = `${config.url.ruta}reportes/imagenes/logo.png`;
+      const datos = respuesta;
+      datos.logo = logo;
+      return pdf.generarPDFaBuffer(html, datos, configPagina)
         .then((filePDF) => {
           res.header('Access-Control-Allow-Origin', '*');
           res.header('Access-Control-Allow-Headers', 'X-Requested-With');
@@ -57,7 +60,6 @@ function reporteProyecto(req, res) {
           res.send(filePDF);
         });
     }).catch((error) => {
-      console.log("===================>", error);
       libs.Error(error);
     });
 }

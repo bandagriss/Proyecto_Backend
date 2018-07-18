@@ -6,6 +6,7 @@
        font-size: 12px;
      }
      .titulo {
+       margin-top: -15px;
        font-size: 20px;
      }
      .subtitulo {
@@ -15,73 +16,105 @@
        font-size: 12px;
      }
      .datoProyecto {
-       background-color: #a6cdec;
+       background-color: #f1efef;
        padding: 2px 5px 2px 2px;
        font-weight: bold;
+     }
+     .guion-bajo {
+       border-bottom: 1px solid gray;
+     }
+     .logo {
+       margin-top: -10px;
+       margin-left: -10px;
+     }
+     .nro-fase {
+       background-color: #ccf5d4;
+     }
+     .titulo-fase {
+       font-size: 14px;
+       font-weight: bold;
+     }
+     .nombre-fase {
+       font-size: 14px;
      }
     </style>
   </head>
   <body>
+    <div class="logo" align="left">
+      <img src="<%= logo %>" alt="Logo CEADL"
+           height="78"
+           width="152"
+          
+      />
+    </div>
     <center>
       <h2 class="titulo">Proyecto <%= nombre %></h2>
     </center>
     <hr/>
-    <table>
+    <table width="510">
       <tr>
-        <td class="contenido datoProyecto" width="18%">
+        <td width="40"></td>
+        <td width="120" class="contenido datoProyecto">
           Fecha Inicio:
         </td>
-        <td class="contenido">
+        <td width="100" class="contenido guion-bajo">
           <%= fecha_inicio.toLocaleDateString() %>
         </td>
-        <td class="contenido datoProyecto" width="20%">
+        <td width="10"></td>
+        <td width="70" class="contenido datoProyecto">
           Fecha Fin:
         </td>
-        <td class="contenido">
+        <td width="100" class="contenido guion-bajo">
           <%= fecha_fin.toLocaleDateString() %>
+        </td>
+        <td width="50"></td>
+      </tr>
+    </table>
+    <br/>
+    <table width="510">
+      <tr>
+        <td width="70"  class="contenido datoProyecto">
+          Institución:
+        </td>
+        <td width="440" colspan="3" class="contenido guion-bajo">
+          <%= Institucion.nombre %>
         </td>
       </tr>
       <tr>
-        <td class="contenido datoProyecto">
-          Institución:
-        </td>
-        <td class="contenido">
-          <%= Institucion.nombre %>
-        </td>
-        <td class="contenido datoProyecto">
+        <td width="70" class="contenido datoProyecto">
           Financiador:
         </td>
-        <td class="contenido">
+        <td width="440" colspan="3" class="contenido guion-bajo">
           <%= Financiador.nombre %>
         </td>
       </tr>
       <tr>
-        <td class="contenido datoProyecto">
+        <td width="70" class="contenido datoProyecto">
           Descripción:
         </td>
-        <td class="contenido">
+        <td  width="440" colspan="3" class="contenido guion-bajo">
           <%= descripcion %>
         </td>
       </tr>
       <tr>
-        <td class="contenido datoProyecto">
+        <td width="70" class="contenido datoProyecto">
           Objetivo:
         </td>
-        <td class="contenido">
+        <td width="440" colspan="3" class="contenido guion-bajo">
           <%= objetivo %>
         </td>
       </tr>
       <tr>
-        <td class="contenido datoProyecto">
+        <td width="70" class="contenido datoProyecto">
           Población Hombres:
         </td>
-        <td class="contenido">
+        <td width="220" class="contenido guion-bajo">
           <%= poblacion_hombres %>
         </td>
-        <td class="contenido datoProyecto">
+        <td width="70" class="contenido datoProyecto">
           Población Mujeres:
         </td>
-        <td class="contenido">
+        <td width="220" class="contenido guion-bajo">
           <%= poblacion_mujeres %>
         </td>
       </tr>
@@ -90,33 +123,33 @@
 
     <% var total = 0 %>
     <% for(var i=0; i<Fases.length; i++) { %>
-      <table border="1">
+      <table width="510">
         <tr>
-          <td class="contenido" colspan="4" style="width:500px;">
-            <h4>Fase <%= i + 1 %>: &nbsp;&nbsp;<%= Fases[i].nombre %></h4>
+          <td width="500" class="contenido nro-fase" colspan="4">
+            <span class="titulo-fase">Fase <%= i + 1 %>:</span> &nbsp;&nbsp;<span class="nombre-fase"><%= Fases[i].nombre %></span>
           </td>
         </tr>
         <tr>
-            <td class="contenido datoProyecto">Fecha Inicio:</td>
-            <td class="contenido"><%= Fases[i].fecha_inicio.toLocaleDateString() %></td>
-            <td class="contenido datoProyecto">Fecha Fin:</td>
-            <td class="contenido"><%= Fases[i].fecha_fin.toLocaleDateString() %></td>
+          <td width="80" class="contenido datoProyecto">Fecha Inicio:</td>
+          <td width="170" class="contenido guion-bajo"><%= Fases[i].fecha_inicio.toLocaleDateString() %></td>
+          <td width="80" class="contenido datoProyecto">Fecha Fin:</td>
+          <td width="170" class="contenido guion-bajo"><%= Fases[i].fecha_fin.toLocaleDateString() %></td>
         </tr>
         <tr>
-            <td class="contenido datoProyecto"> Descripción:</td>
-            <td class="contenido">
+            <td width="80" class="contenido datoProyecto"> Descripción:</td>
+            <td width="420" colspan="3" class="contenido guion-bajo">
               <%= Fases[i].descripcion %>
             </td>
         </tr>
         <tr>
-            <td class="contenido datoProyecto">Estado:</td>
-            <td class="contenido"><%= Fases[i].estado %></td>
-            <td class="contenido datoProyecto">Gastos:</td>
-            <td class="contenido"><%= Fases[i].gastos %> Bs. <% total = total + parseInt(Fases[i].gastos) %></td>
+            <td width="80" class="contenido datoProyecto">Estado:</td>
+            <td width="170" class="contenido guion-bajo"><%= Fases[i].estado %></td>
+            <td width="80" class="contenido datoProyecto">Gastos:</td>
+            <td width="170" class="contenido guion-bajo"><%= Fases[i].gastos %> Bs. <% total = total + parseInt(Fases[i].gastos) %></td>
         </tr>
         <tr>
-          <td class="contenido datoProyecto">Adjuntos</td>
-          <td class="contenido" colspan="4">
+          <td width="80" class="contenido datoProyecto">Adjuntos</td>
+          <td width="420" class="contenido guion-bajo" colspan="4">
           <% for(var j =0; j<Fases[i].Documentos.length; j++) { %>
             <a href="http://localhost:3000<%= Fases[i].Documentos[j].detalle %>" target="_blank"><%= Fases[i].Documentos[j].nombre %></a>
               <% } %>
@@ -124,7 +157,12 @@
         </tr>
       </table>
       <% } %>
-      
-      <div class="subtitulo"><h3>Total Inversión Proyecto <%= total %> Bs.</h3></div>
+
+      <table width="510">
+        <tr>
+          <td width="150" class="contenido nro-fase"><b>Total Inversión Proyecto</b></td>
+          <td width="360" class="contenido guion-bajo"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= total %> Bs.</td>
+        </tr>
+      </table>
   </body>
 </html>
