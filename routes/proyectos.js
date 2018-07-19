@@ -20,7 +20,7 @@ router.route('/proyecto/:id')
 router.route('/proyectos_usuarios/:id_persona')
   .get(jwt({ secret }), ProyectoCtrl.listarProyectosPersonas);
 
-router.route('/proyectos_institucion/:id_departamento')
+router.route('/proyectos_institucion/:id_institucion')
   .get(jwt({ secret }), ProyectoCtrl.listarProyectosInstitucion);
 
 module.exports = router;

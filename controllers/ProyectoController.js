@@ -94,7 +94,7 @@ function listarProyectosPersonas(req, res) {
 function listarProyectosInstitucion(req, res) {
   models.Proyecto.findAll({
     where: {
-      fid_institucion: req.params.id_departamento
+      fid_institucion: req.params.id_institucion
     },
     include: [{
       model: models.Fase
