@@ -29,5 +29,8 @@ router.route('/usuarios/:id')
   .put(jwt({ secret }), UsuarioCtrl.actualizar)
   .delete(jwt({ secret }), UsuarioCtrl.eliminar);
 
+router.route('/usuario/imagen')
+  .post(jwt({ secret }), UsuarioCtrl.imagen);
+
 
 module.exports = router;
